@@ -7,7 +7,7 @@ import { PostContext } from "../posts/PostProvider";
 //export function to display form for new post
 export const PostForm = () => {
     
-    const { addPost, getPostById, editPost, getPosts } = useContext(PostContext)
+    const { addPost, getPostById, updatePost, getPosts } = useContext(PostContext)
     const { postId } = useParams()
     const [ isLoading, setIsLoading ] = useState(true);
     const history = useHistory();
@@ -46,7 +46,7 @@ export const PostForm = () => {
         
        //if in the edit page, editPost() then navigate to inspections 
        if (postId) {
-        editPost(post)
+        updatePost(post)
         .then(history.goBack)
         
         } else {
