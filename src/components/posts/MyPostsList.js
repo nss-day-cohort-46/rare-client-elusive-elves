@@ -6,7 +6,7 @@ import "./Post.css"
 import { useHistory } from "react-router-dom"
 import { UserContext } from "../users/UserProvider"
 
-//TODO: make a list so only user posts are visible
+
 export const MyPostsList = () => {
     const { posts, searchTerms, getPostsByUserId } = useContext(PostContext)
     const { getUsers, users } = useContext(UserContext)
@@ -15,18 +15,17 @@ export const MyPostsList = () => {
     const [filteredPosts, setFiltered] = useState([])
     const history = useHistory()
 
-    const rareUser = parseInt(sessionStorage.getItem('rare_user_id'))
+    const rareUser = parseInt(localStorage.getItem('rare_user_id'))
+    
+    
 
-    // Initialization effect hook -> Go get USER post data
+    // get USER posts on page load
     useEffect(() => {
         getPostsByUserId(rareUser)
             .then(setFiltered)
         getUsers()
     }, [])
 
-    useEffect(() => {
-        console.log("user posts:", filteredPosts)
-    }, [filteredPosts])
 
     //search user posts
     useEffect(() => {
