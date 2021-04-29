@@ -70,12 +70,12 @@ export const PostDetail = () => {
             <div className="postContent">Content: {post?.content}</div>
             
             { deletable ? <button className="btn btn-primary"
-                disabled={isLoading}
+                
                 onClick={handleDelete}>
                 Delete
             </button> : "" }
             { deletable ? <button className="btn btn-primary"
-                disabled={isLoading}
+                
                 onClick={handleEdit}>
                 Edit
             </button> : "" }
