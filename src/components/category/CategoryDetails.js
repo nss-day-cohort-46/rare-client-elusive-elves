@@ -4,7 +4,7 @@ import { CategoryContext } from "./CategoryProvider"
 
 export const CategoryDetail = () => {
     const { getCategories, getCategoryById, deleteCategory, updateCategory } = useContext(CategoryContext)
-    const { category, setCategory } = useState({})
+    const [ category, setCategory ] = useState({})
     const { categoryId } = useParams()
     const history = useHistory()
 
