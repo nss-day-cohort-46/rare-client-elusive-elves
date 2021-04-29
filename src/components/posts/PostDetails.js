@@ -6,20 +6,23 @@ import { useParams, useHistory } from "react-router-dom"
 
 export const PostDetail = () => {
   
-  const { getPostById, deletePost } = useContext(PostContext)
+    const { getPostById, deletePost } = useContext(PostContext)
 
 	const [post, setPost] = useState({})
 
 	const {postId} = useParams();
   
-  const history = useHistory()
+    const history = useHistory()
 
-  const handleDelete = () => {
-    deletePost(post.id)
-      .then(() => {
-        history.push("/posts")
-      })
-  }
+    
+
+    const handleDelete = () => {
+
+        deletePost(post.id)
+            .then(() => {
+                history.push("/posts")
+            })
+    }
 
 
   useEffect(() => {
