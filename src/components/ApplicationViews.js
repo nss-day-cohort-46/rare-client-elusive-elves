@@ -8,7 +8,7 @@ import { CategoryProvider } from "./category/CategoryProvider"
 import { CategoryList } from "./category/CategoryList"
 import { CategoryForm } from "./category/CategoryForm"
 import { UserProvider } from "./users/UserProvider"
-import { CategoryProvider } from "./category/CategoryProvider"
+
 
 
 export const ApplicationViews = () => {
