@@ -14,9 +14,6 @@ export const CategoryList = () => {
       getCategories()
     }, [])
 
-    // useEffect(() => {
-    // }, [])
-
     return (
       <>
         <section className="CategoryList">
