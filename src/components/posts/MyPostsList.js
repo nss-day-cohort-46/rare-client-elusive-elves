@@ -24,6 +24,9 @@ export const MyPostsList = () => {
         getUsers()
     }, [])
 
+    useEffect(() => {
+        console.log("user posts:", filteredPosts)
+    }, [filteredPosts])
 
     //search user posts
     useEffect(() => {
