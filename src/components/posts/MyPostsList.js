@@ -15,7 +15,7 @@ export const MyPostsList = () => {
     const [filteredPosts, setFiltered] = useState([])
     const history = useHistory()
 
-    const rareUser = +sessionStorage.getItem('rare_user_id')
+    const rareUser = parseInt(sessionStorage.getItem('rare_user_id'))
 
     // Initialization effect hook -> Go get USER post data
     useEffect(() => {
