@@ -1,12 +1,16 @@
 import React, { useState, useContext, useEffect } from "react"
 import { PostContext } from "./PostProvider"
+
 import { PostCard } from "./PostCard"
 import "./Post.css"
 import { useHistory } from "react-router-dom"
+import { UserContext } from "../users/UserProvider"
 
 
 export const PostList = () => {
     const { getPosts, posts, searchTerms } = useContext(PostContext)
+    // debugger
+    const { getUsers, users } = useContext(UserContext)
 
     // useState to return filtered posts
     const [ filteredPosts, setFiltered ] = useState([])
@@ -38,7 +42,11 @@ export const PostList = () => {
             <div className="posts">
                 {
                     filteredPosts.map(postObject => {
-                        return <PostCard key={postObject.id} postInstance={postObject} />
+                        const author = users.find(u => parseInt(u.id) === parseInt(posts.user_id))
+
+                        return <PostCard key={postObject.id} postInstance={postObject} 
+                        postAuthor = {author}
+                        />
                     })
                 }
             </div>
