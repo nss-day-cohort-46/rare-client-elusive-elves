@@ -14,6 +14,7 @@ export const PostForm = () => {
     const date = new Date
 
 
+
     //Define the intial state of the Post with useState()
     const [post, setPost] = useState({
         user_id: parseInt(localStorage.getItem("rare_user_id")),

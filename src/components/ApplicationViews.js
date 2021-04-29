@@ -4,6 +4,7 @@ import { PostList } from "./posts/PostList"
 import { PostProvider } from "./posts/PostProvider"
 import { PostDetail } from "./posts/PostDetails"
 import { PostForm } from "./posts/PostForm"
+import { UserProvider } from "./users/UserProvider"
 
 
 export const ApplicationViews = () => {
@@ -13,18 +14,20 @@ export const ApplicationViews = () => {
             lineHeight: "1.75rem"
         }}>
         <PostProvider>
-            <Route exact path="/">
-                <PostList />
-            </Route>
-            <Route exact path="/posts/detail/:postId(\d+)">
-                <PostDetail />
-            </Route>
-            <Route exact path="/posts/edit/:postId(\d+)">
-                <PostForm />
-            </Route>
-            <Route exact path="/posts/create">
-                <PostForm />
-            </Route>
+            <UserProvider>
+                <Route exact path="/">
+                    <PostList />
+                </Route>
+                <Route exact path="/posts/detail/:postId(\d+)">
+                    <PostDetail />
+                </Route>
+                <Route exact path="/posts/edit/:postId(\d+)">
+                    <PostForm />
+                </Route>
+                <Route exact path="/posts/create">
+                    <PostForm />
+                </Route>
+            </UserProvider>
         </PostProvider>
         </main>
     </>
