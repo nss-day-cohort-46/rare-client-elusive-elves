@@ -8,6 +8,7 @@ import { PostForm } from "./posts/PostForm"
 import { CategoryProvider } from "./category/CategoryProvider"
 import { CategoryList } from "./category/CategoryList"
 import { CategoryForm } from "./category/CategoryForm"
+import { CategoryDetail } from "./category/CategoryDetails"
 import { UserProvider } from "./users/UserProvider"
 
 
@@ -46,6 +47,12 @@ export const ApplicationViews = () => {
                 <CategoryList />
             </Route>
             <Route exact path="/categories/create">
+                <CategoryForm />
+            </Route>
+            <Route exact path="/categories/detail/:categoryId(\d+)">
+                <CategoryDetail />
+            </Route>
+            <Route exact path="/categories/edit/:categoryId(\d+)">
                 <CategoryForm />
             </Route>
         </CategoryProvider>
