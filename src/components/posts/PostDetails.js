@@ -3,12 +3,14 @@ import { PostContext } from "./PostProvider"
 import "./Post.css"
 import { useParams, useHistory } from "react-router-dom"
 import { UserContext } from "../users/UserProvider"
+import { CategoryContext } from "../category/CategoryProvider"
 
 export const PostDetail = () => {
   
 
     const { getPostById, deletePost, getPosts, posts} = useContext(PostContext)
     const { users, getUsers } = useContext(UserContext)
+    const { categories } = useContext(CategoryContext)
     const [post, setPost] = useState({})
 	const {postId} = useParams();
     const history = useHistory()
@@ -44,6 +46,7 @@ export const PostDetail = () => {
     }, [])
     
     const author = users.find(u => parseInt(u.id) === parseInt(post?.user_id))
+    const category = categories.find(c => parseInt(c.id) === parseInt(post?.category_id))
 
     
 
@@ -61,7 +64,7 @@ export const PostDetail = () => {
             <h3 className="postTitle">{post?.title}</h3>
             <div className="postId">Post ID: {post?.id}</div>
             <div className="postAuthor">Author: {author?.first_name} {author?.last_name}</div>
-            <div className="postCategory">Category: {post?.category}</div>
+            <div className="postCategory">Category: {category?.label}</div>
             <div className="postPublicationDate">Publication Date: {post?.publication_date }</div>
             <div className="postContent">Content: {post?.content}</div>
             
