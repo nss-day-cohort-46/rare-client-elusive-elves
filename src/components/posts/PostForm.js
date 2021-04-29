@@ -123,13 +123,13 @@ export const PostForm = () => {
             
             
             <button className="btn btn-primary"
-                disabled={isLoading}
+                
                 onClick={handleClickSavePost}>
                 Save Post
             </button>
             
             { postId ? <button className="btn btn-primary"
-                disabled={isLoading}
+                
                 onClick={handleClickCancel}>
                 Cancel
             </button> : "" }
