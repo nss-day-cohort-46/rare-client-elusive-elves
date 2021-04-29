@@ -5,12 +5,14 @@ import { PostCard } from "./PostCard"
 import "./Post.css"
 import { useHistory } from "react-router-dom"
 import { UserContext } from "../users/UserProvider"
+import { CategoryContext } from "../category/CategoryProvider"
+
 
 
 export const PostList = () => {
     const { getPosts, posts, searchTerms } = useContext(PostContext)
-    // debugger
     const { getUsers, users } = useContext(UserContext)
+    const { getCategories, categories } = useContext(CategoryContext)
 
     // useState to return filtered posts
     const [ filteredPosts, setFiltered ] = useState([])
@@ -19,6 +21,8 @@ export const PostList = () => {
     // Initialization effect hook -> Go get post data
     useEffect(()=>{
       getPosts()
+      getUsers()
+      getCategories()
     }, [])
   
     useEffect(() => {
@@ -32,6 +36,13 @@ export const PostList = () => {
       }
     }, [searchTerms, posts])
 
+
+
+    const postsSorted = posts.sort(
+      (currentPost, nextPost) =>
+          Date.parse(nextPost.publication_date) - Date.parse(currentPost.publication_date)
+    )
+  
       return (
         <>
             <h1>Posts</h1>
@@ -41,11 +52,14 @@ export const PostList = () => {
             </button>
             <div className="posts">
                 {
-                    filteredPosts.map(postObject => {
-                        const author = users.find(u => parseInt(u.id) === parseInt(posts.user_id))
+                    postsSorted.map(postObject => {
+                      
+                        const author = users.find(u => parseInt(u.id) === parseInt(postObject.user_id))
+                        const category = categories.find(c => parseInt(c.id) === parseInt(postObject.category_id))
 
                         return <PostCard key={postObject.id} postInstance={postObject} 
                         postAuthor = {author}
+                        postCategory = {category}
                         />
                     })
                 }
