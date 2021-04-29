@@ -21,7 +21,10 @@ export const PostProvider = (props) => {
             },
             body: JSON.stringify(postObj)
         })
-        .then(getPosts)
+         //get the new object back
+         .then(res => res.json())
+         .then(post => {
+             return post})
     }
 
     //function to get post by ID
