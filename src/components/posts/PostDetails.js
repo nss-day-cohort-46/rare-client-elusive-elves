@@ -26,6 +26,7 @@ export const PostDetail = () => {
     }, [])
 
 
+
     useEffect(() => {
 
         getPostById(postId)
