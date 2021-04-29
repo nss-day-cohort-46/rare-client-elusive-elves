@@ -31,7 +31,7 @@ export const CategoryDetail = () => {
             <section className="category">
                 <div className="categoryLabel">Category: {category?.label}</div>
                 <button onClick={handleDelete}>Delete Category</button>
-                <button onClick={() => { history.push(`/category/edit/${category?.id}`) }}>Edit</button>
+                <button onClick={() => { history.push(`/categories/edit/${category?.id}`) }}>Edit</button>
             </section>
         </>
     )

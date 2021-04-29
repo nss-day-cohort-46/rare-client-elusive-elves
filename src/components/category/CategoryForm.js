@@ -9,25 +9,23 @@ export const CategoryForm = () => {
     const history = useHistory()
 
     //Define the intial state of the Category with useState()
-    const [category, setCategory] = useState({
-        label: ""
-    })
+    const [category, setCategory] = useState("")
 
     //track changes to form, update state variable with setCategory
     const handleInputChange = e => {
         // pass all key:value pairs from ...category 
-        const newCategory = { ...category }
-        newCategory[e.target.id] = e.target.value
-        setCategory(newCategory)
+        // const newCategory = { ...category }
+        // newCategory[e.target.id] = e.target.value
+        setCategory(e.target.value)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
         if (categoryId) {
-            updateCategory(category)
-                .then(history.push(`/categories`))
+            updateCategory({id: categoryId, label: category})
+                .then(() => history.push(`/categories`))
         } else {
-            addCategory(category)
+            addCategory({label: category})
             history.push("/categories")
         }
     }
@@ -37,8 +35,7 @@ export const CategoryForm = () => {
             if (categoryId) {
                 getCategoryById(categoryId)
                     .then(category => {
-                        setCategory(category)
-
+                        setCategory(category.label)
                         setIsLoading(false)
                     })
             } else {
@@ -50,12 +47,21 @@ export const CategoryForm = () => {
 
     return (
         <section className="category_form">
-            <h2>Create a Category</h2>
-            <input type="text"
-                placeholder="Enter new category"
-                id="label"
-                onChange={handleInputChange}></input>
-            <button onClick={handleSubmit}>Submit</button>
+            <form className="catgoryForm">
+                <h2>{categoryId ? "Edit Category" : "Create Category"}</h2>
+                <fieldset className="form">
+                    <div className="form-group">
+                        <label htmlFor="categoryLabel">Category</label>
+                        <input type="text"
+                            placeholder={categoryId ? category : "Enter new category"}
+                            id="categoryLabel"
+                            onChange={handleInputChange}
+                            className="form-control"
+                            value={category.label}></input>
+                        <button onClick={handleSubmit}>Submit</button>
+                    </div>
+                </fieldset>
+            </form>
         </section>
     )
 }
