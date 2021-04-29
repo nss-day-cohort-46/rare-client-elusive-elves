@@ -11,15 +11,15 @@ export const PostForm = () => {
     const { postId } = useParams()
     const [ isLoading, setIsLoading ] = useState(true);
     const history = useHistory();
-    
+    const date = new Date
 
-    
+
     //Define the intial state of the Post with useState()
     const [post, setPost] = useState({
         user_id: parseInt(localStorage.getItem("rare_user_id")),
         category_id: "",
         title: "",
-        publication_date: "",
+        publication_date: date.toLocaleDateString(),
         content: ""      
     });
 
@@ -53,12 +53,18 @@ export const PostForm = () => {
         
         } else {
        
-        //create a new Post then move to newMainParachute()
+        //create a new Post then move to post details
         addPost(post)
-        .then(() => history.push("/"))
+        .then( p => {
+            p = p
+            history.push(`/posts/detail/${p.id}`)
+        })   
       
     }}
-
+    //handle save function
+    const handleClickCancel = () => {
+        history.push(`/posts/detail/${postId}`)
+    }
 
     useEffect(() => {
         //get all Posts
@@ -101,12 +107,12 @@ export const PostForm = () => {
                     <input type="text" id="category_id" onChange={handleControlledInputChange} className="form-control" placeholder="Category" value={post.category_id}/>
                 </div>
             </fieldset>
-            <fieldset className="form">
+            {/* <fieldset className="form">
                 <div className="form-group">
                     <label htmlFor="publication_date">Publication Date: </label>
                     <input type="text" id="publication_date" onChange={handleControlledInputChange} className="form-control" placeholder="Publication Date" value={post.publication_date}/>
                 </div>
-            </fieldset>
+            </fieldset> */}
             <fieldset className="form">
                 <div className="form-group">
                     <label htmlFor="content">Content: </label>
@@ -121,6 +127,18 @@ export const PostForm = () => {
                 onClick={handleClickSavePost}>
                 Save Post
             </button>
+            
+            { postId ? <button className="btn btn-primary"
+                disabled={isLoading}
+                onClick={handleClickCancel}>
+                Cancel
+            </button> : "" }
+            
+            {/* {postId ? <button className="btn" 
+                disabled={isLoading}
+                onClick={history.push(`/posts/detail/${postId}`)}>
+                Delete
+            </button> : "" } */}
         </form>
         </article>
         </>
