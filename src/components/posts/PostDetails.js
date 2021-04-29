@@ -6,6 +6,7 @@ import { UserContext } from "../users/UserProvider"
 
 export const PostDetail = () => {
   
+
     const { getPostById, deletePost, getPosts, posts} = useContext(PostContext)
     const { users, getUsers } = useContext(UserContext)
     const [post, setPost] = useState({})
@@ -23,6 +24,7 @@ export const PostDetail = () => {
         getUsers()
         getPosts()
     }, [])
+
 
     useEffect(() => {
 
