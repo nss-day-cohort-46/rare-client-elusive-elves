@@ -9,8 +9,8 @@ export const PostProvider = (props) => {
 
     const getPosts = () => {
         return fetch("http://localhost:8088/posts")
-        .then(res => res.json())
-        .then(setPosts)
+            .then(res => res.json())
+            .then(setPosts)
     }
 
     const addPost = postObj => {
@@ -21,15 +21,22 @@ export const PostProvider = (props) => {
             },
             body: JSON.stringify(postObj)
         })
-         //get the new object back
-         .then(res => res.json())
-         .then(post => {
-             return post})
+            //get the new object back
+            .then(res => res.json())
+            .then(post => {
+                return post
+            })
     }
 
     //function to get post by ID
     const getPostById = (id) => {
         return fetch(`http://localhost:8088/posts/${id}`)
+            .then(res => res.json())
+    }
+
+    //get post by USER id
+    const getPostsByUserId = (id) => {
+        return fetch(`http://localhost:8088/posts?user=${id}`)
             .then(res => res.json())
     }
 
@@ -43,16 +50,16 @@ export const PostProvider = (props) => {
 
     const updatePost = post => {
         return fetch(`http://localhost:8088/posts/${post.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(post)
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(post)
         })
-          .then(getPosts)
-      }
+            .then(getPosts)
+    }
 
-    const [ searchTerms, setSearchTerms ] = useState("")
+    const [searchTerms, setSearchTerms] = useState("")
 
     /*
         You return a context provider which has the
@@ -62,7 +69,7 @@ export const PostProvider = (props) => {
     */
     return (
         <PostContext.Provider value={{
-            posts, getPosts, addPost, getPostById, deletePost, updatePost, searchTerms, setSearchTerms
+            posts, getPosts, addPost, getPostById, deletePost, updatePost, searchTerms, setSearchTerms, getPostsByUserId
         }}>
             {props.children}
         </PostContext.Provider>
