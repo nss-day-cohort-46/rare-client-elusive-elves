@@ -17,11 +17,13 @@ export const MyPostsList = () => {
 
     const rareUser = +sessionStorage.getItem('rare_user_id')
 
-    // Initialization effect hook -> Go get post data
+    // Initialization effect hook -> Go get USER post data
     useEffect(() => {
         getPostsByUserId(rareUser)
             .then(setFiltered)
+        getUsers()
     }, [])
+
 
     //search user posts
     useEffect(() => {
