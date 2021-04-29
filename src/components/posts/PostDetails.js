@@ -12,12 +12,21 @@ export const PostDetail = () => {
     const [post, setPost] = useState({})
 	const {postId} = useParams();
     const history = useHistory()
+    const currentUser = parseInt(localStorage.getItem("rare_user_id"))
+    const [ isLoading, setIsLoading ] = useState(true);
 
     const handleDelete = () => {
         deletePost(post.id)
         .then(() => {
             history.push("/posts")
         })
+    }
+
+    const handleEdit = () => {
+        
+        
+            history.push(`/posts/edit/${post?.id}`)
+        
     }
 
     useEffect(() => {
@@ -35,7 +44,16 @@ export const PostDetail = () => {
     }, [])
     
     const author = users.find(u => parseInt(u.id) === parseInt(post?.user_id))
+
     
+
+   
+    let deletable = ""
+    if(currentUser === post?.user_id) {
+        deletable = 1
+    }
+    
+
     return (
         
         <>
@@ -44,10 +62,22 @@ export const PostDetail = () => {
             <div className="postId">Post ID: {post?.id}</div>
             <div className="postAuthor">Author: {author?.first_name} {author?.last_name}</div>
             <div className="postCategory">Category: {post?.category}</div>
-            <div className="postPublicationDate">Publication Date: {post?.publication_date}</div>
+            <div className="postPublicationDate">Publication Date: {post?.publication_date }</div>
             <div className="postContent">Content: {post?.content}</div>
-            <button onClick={handleDelete}>Delete Post</button>
-            <button onClick={() => {history.push(`/posts/edit/${post?.id}`)}}>Edit</button>
+            
+            { deletable ? <button className="btn btn-primary"
+                disabled={isLoading}
+                onClick={handleDelete}>
+                Delete
+            </button> : "" }
+            { deletable ? <button className="btn btn-primary"
+                disabled={isLoading}
+                onClick={handleEdit}>
+                Edit
+            </button> : "" }
+            
+            
+            
         </section>
         </>
     )

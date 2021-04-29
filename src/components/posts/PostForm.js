@@ -20,7 +20,7 @@ export const PostForm = () => {
         user_id: parseInt(localStorage.getItem("rare_user_id")),
         category_id: "",
         title: "",
-        publication_date: date.toLocaleDateString(),
+        publication_date: date.toLocaleString(),
         content: ""      
     });
 
