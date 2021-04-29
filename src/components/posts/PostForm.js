@@ -12,6 +12,8 @@ export const PostForm = () => {
     const [ isLoading, setIsLoading ] = useState(true);
     const history = useHistory();
     
+
+    
     //Define the intial state of the Post with useState()
     const [post, setPost] = useState({
         user_id: parseInt(sessionStorage.getItem("rare_user_id")),
