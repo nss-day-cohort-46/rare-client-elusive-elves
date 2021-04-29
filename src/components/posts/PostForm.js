@@ -135,11 +135,7 @@ export const PostForm = () => {
                 Cancel
             </button> : "" }
             
-            {/* {postId ? <button className="btn" 
-                disabled={isLoading}
-                onClick={history.push(`/posts/detail/${postId}`)}>
-                Delete
-            </button> : "" } */}
+            
         </form>
         </article>
         </>
