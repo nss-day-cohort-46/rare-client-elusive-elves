@@ -1,5 +1,3 @@
-// UNDER CONSTRUCTION
-
 import React, { useContext, useState } from 'react'
 import { useHistory } from 'react-router'
 import { CategoryContext } from './CategoryProvider'
@@ -10,6 +8,7 @@ export const CategoryForm = () => {
     const history = useHistory()
 
     const handleInputChange = e => {
+        // pass all key:value pairs from ...category 
         const newCategory = {...category}
         newCategory[e.target.id] = e.target.value
         setCategory(newCategory)
