@@ -36,7 +36,7 @@ export const PostProvider = (props) => {
 
     //get post by USER id
     const getPostsByUserId = (id) => {
-        return fetch(`http://localhost:8088/posts/${id}`)
+        return fetch(`http://localhost:8088/posts?user=${id}`)
             .then(res => res.json())
     }
 
