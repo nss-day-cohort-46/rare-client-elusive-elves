@@ -50,14 +50,24 @@ export const PostList = () => {
       (currentPost, nextPost) =>
           Date.parse(nextPost.publication_date) - Date.parse(currentPost.publication_date)
     )
-    setFiltered(postsSorted)
+    
 
 
     //filter by tags
     const handleTagFilter = (e) => {
-      tagId = parseInt(e.target.id)
-      postsWithThisTag = postTags.filter(pt => pt.tag_id === tagId)
-      matchingPosts = postsSorted.filter(post => post.id === postsWithThisTag.post_id)
+      const tagId = parseInt(e.target.id.split("--")[1])
+      console.log('tagId: ', tagId);
+      const postsWithThisTag = postTags.filter(pt => pt.tag_id === tagId)
+      console.log('postsWithThisTag: ', postsWithThisTag);
+      const matchingPosts = []
+      postsWithThisTag.map(item => {
+        posts.find(post => {
+          if (post.id === item.post_id) {
+            matchingPosts.push(post)
+          }
+        })
+      })
+      console.log('matchingPosts: ', matchingPosts);
       setFiltered(matchingPosts)
     }
 
@@ -85,11 +95,14 @@ export const PostList = () => {
                     })
                 }
             </div>
-            <aside className="tags">
+            <div className="tags">
+                <h3> Tags: </h3>
                 {tags.map(tag => {
-                  <button id={`tagBtn--${tag.id}`} onClick={}>{tag.label}</button>
+                  return <button id={`tagBtn--${tag.id}`} onClick={e => {
+                    handleTagFilter(e)
+                  }}>{tag.label}</button>
                 })}
-            </aside>
+            </div>
         </>
     )
 }
