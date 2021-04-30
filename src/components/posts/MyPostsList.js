@@ -24,6 +24,7 @@ export const MyPostsList = () => {
         getPostsByUserId(rareUser)
             .then(setFiltered)
         getUsers()
+        getCategories()
     }, [])
 
 
