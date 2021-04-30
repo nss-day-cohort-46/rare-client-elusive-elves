@@ -21,6 +21,10 @@ export const TagForm = (props) => {
       setTag(newTag)
     }
 
+    const handleClickCancel = () => {
+        history.push(`/tags/detail/${tagId}`)
+    }
+
     const handleSaveTag = () => {
 
       if (tag.label === "" ) {
@@ -77,6 +81,11 @@ export const TagForm = (props) => {
                   handleSaveTag()
               }}>
               {tagId ? "Save Tag" : "Add Tag"}</button>
+              {tagId ? <button className="btn btn-primary"
+                            disabled={isLoading}
+                            onClick={handleClickCancel}>
+                            Cancel
+                        </button> : ""}
       </form>
   )
 }
