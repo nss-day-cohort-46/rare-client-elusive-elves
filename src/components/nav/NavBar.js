@@ -21,7 +21,7 @@ export const NavBar = () => {
                 <Link className="navbar__link" to="/categories">Categories</Link>
             </li>
 
-            <li className="navbar_item">
+            <li className="navbar__item">
                 <Link className="navbar_link" to="/tags">Tags</Link>
             </li>
             {
