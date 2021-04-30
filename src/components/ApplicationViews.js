@@ -15,6 +15,7 @@ import { SubscriptionProvider } from "./subscriptions/SubscriptionProvider"
 import { TagsProvider } from "./tags/TagsProvider"
 import { TagList } from "./tags/TagList"
 import { TagForm } from "./tags/TagForm"
+import { TagDetail } from "./tags/TagDetail"
 
 
 
@@ -72,6 +73,9 @@ export const ApplicationViews = () => {
             </Route>
             <Route exact path="/tags/create">
                 <TagForm/>
+            </Route>
+            <Route exact path="/tags/detail/:tagId(\d+)">
+                <TagDetail />
             </Route>
         </TagsProvider>
         </main>
