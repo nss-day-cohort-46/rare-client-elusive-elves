@@ -11,6 +11,8 @@ export const CommentForm = () => {
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory();
     const date = new Date
+    
+    // console.log('postId: ', postId);
 
     //Define the intial state of the Comment with useState()
     const [comment, setComment] = useState({
@@ -97,7 +99,6 @@ export const CommentForm = () => {
                     </div>
 
                     <button className="btn btn-primary"
-
                         onClick={handleClickSaveComment}>
                         Save
             </button>
