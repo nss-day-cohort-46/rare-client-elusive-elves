@@ -6,6 +6,7 @@ import "./Post.css"
 import { useHistory } from "react-router-dom"
 import { UserContext } from "../users/UserProvider"
 import { CategoryContext } from "../category/CategoryProvider"
+import { TagContext } from "../tags/TagsProvider"
 
 
 
@@ -13,18 +14,29 @@ export const PostList = () => {
     const { getPosts, posts, searchTerms } = useContext(PostContext)
     const { getUsers, users } = useContext(UserContext)
     const { getCategories, categories } = useContext(CategoryContext)
+    const { tags, getTags, getPostTags } = useContext(TagContext)
 
     // useState to return filtered posts
     const [ filteredPosts, setFiltered ] = useState([])
     const history = useHistory()
   
+    
+    //state variable for post-tags
+    const [postTags, setPostTags] = useState([])
+
+    //state variable for sorting posts
+    const [postsSorted, setPostsSorted] = useState([])
+
     // Initialization effect hook -> Go get post data
     useEffect(()=>{
-      getPosts()
+      getPosts().then(setFiltered)
       getUsers()
       getCategories()
+      getTags()
+      getPostTags().then(setPostTags)
     }, [])
   
+
     useEffect(() => {
       if (searchTerms !== "") {
         // If the search field is not blank, display matching posts
@@ -37,12 +49,35 @@ export const PostList = () => {
     }, [searchTerms, posts])
 
 
+    //watch filteredPosts for sorting
+    useEffect(() => {
+        const sorted = filteredPosts.sort(
+        (currentPost, nextPost) =>
+            Date.parse(nextPost.publication_date) - Date.parse(currentPost.publication_date)
+      )
+        setPostsSorted(sorted)
+    }, [filteredPosts])
+    
 
-    const postsSorted = posts.sort(
-      (currentPost, nextPost) =>
-          Date.parse(nextPost.publication_date) - Date.parse(currentPost.publication_date)
-    )
-  
+
+    //filter by tags
+    const handleTagFilter = (e) => {
+      const tagId = parseInt(e.target.id.split("--")[1])
+      const postsWithThisTag = postTags.filter(pt => pt.tag_id === tagId)
+      const matchingPosts = []
+      postsWithThisTag.map(item => {
+        posts.find(post => {
+          if (post.id === item.post_id) {
+            matchingPosts.push(post)
+          }
+        })
+      })
+      setFiltered(matchingPosts)
+    }
+
+
+
+
       return (
         <>
             <h1>Posts</h1>
@@ -63,6 +98,14 @@ export const PostList = () => {
                         />
                     })
                 }
+            </div>
+            <div className="tags">
+                <h3> Tags: </h3>
+                {tags.map(tag => {
+                  return <button id={`tagBtn--${tag.id}`} onClick={e => {
+                    handleTagFilter(e)
+                  }}>{tag.label}</button>
+                })}
             </div>
         </>
     )

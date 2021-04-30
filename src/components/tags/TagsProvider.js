@@ -4,8 +4,9 @@ import React, { useState, createContext } from "react"
 export const TagContext = createContext()
 
 // This component establishes what data can be used.
-export const TagProvider = (props) => {
+export const TagsProvider = (props) => {
     const [tags, setTags] = useState([])
+    const [ searchTerms, setSearchTerms ] = useState("")
 
     const getTags = () => {
         return fetch("http://localhost:8088/tags")
@@ -49,7 +50,11 @@ export const TagProvider = (props) => {
           .then(getTags)
       }
 
-    const [ searchTerms, setSearchTerms ] = useState("")
+    const getPostTags = () => {
+        return fetch("http://localhost:8088/post_tags")
+        .then(res => res.json())
+    }
+    
 
     /*
         You return a context provider which has the
@@ -59,7 +64,7 @@ export const TagProvider = (props) => {
     */
     return (
         <TagContext.Provider value={{
-            tags, getTags, addTag, getTagById, deleteTag, updateTag, searchTerms, setSearchTerms
+            tags, getTags, addTag, getTagById, deleteTag, updateTag, searchTerms, setSearchTerms, getPostTags
         }}>
             {props.children}
         </TagContext.Provider>

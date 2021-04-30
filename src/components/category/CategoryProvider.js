@@ -64,5 +64,4 @@ export const CategoryProvider = (props) => {
             {props.children}
         </CategoryContext.Provider>
     )
-
 }
