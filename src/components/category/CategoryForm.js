@@ -36,7 +36,7 @@ export const CategoryForm = () => {
             if (categoryId) {
                 getCategoryById(categoryId)
                     .then(category => {
-                        setCategory(category)
+                        setCategory(category.label)
                         setIsLoading(false)
                     })
             } else {
