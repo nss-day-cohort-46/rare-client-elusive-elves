@@ -24,9 +24,12 @@ export const PostList = () => {
     //state variable for post-tags
     const [postTags, setPostTags] = useState([])
 
+    //state variable for sorting posts
+    const [postsSorted, setPostsSorted] = useState([])
+
     // Initialization effect hook -> Go get post data
     useEffect(()=>{
-      getPosts()
+      getPosts().then(setFiltered)
       getUsers()
       getCategories()
       getTags()
@@ -46,19 +49,21 @@ export const PostList = () => {
     }, [searchTerms, posts])
 
 
-    const postsSorted = posts.sort(
-      (currentPost, nextPost) =>
-          Date.parse(nextPost.publication_date) - Date.parse(currentPost.publication_date)
-    )
+    //watch filteredPosts for sorting
+    useEffect(() => {
+        const sorted = filteredPosts.sort(
+        (currentPost, nextPost) =>
+            Date.parse(nextPost.publication_date) - Date.parse(currentPost.publication_date)
+      )
+        setPostsSorted(sorted)
+    }, [filteredPosts])
     
 
 
     //filter by tags
     const handleTagFilter = (e) => {
       const tagId = parseInt(e.target.id.split("--")[1])
-      console.log('tagId: ', tagId);
       const postsWithThisTag = postTags.filter(pt => pt.tag_id === tagId)
-      console.log('postsWithThisTag: ', postsWithThisTag);
       const matchingPosts = []
       postsWithThisTag.map(item => {
         posts.find(post => {
@@ -67,7 +72,6 @@ export const PostList = () => {
           }
         })
       })
-      console.log('matchingPosts: ', matchingPosts);
       setFiltered(matchingPosts)
     }
 
@@ -83,7 +87,7 @@ export const PostList = () => {
             </button>
             <div className="posts">
                 {
-                    filteredPosts.map(postObject => {
+                    postsSorted.map(postObject => {
                       
                         const author = users.find(u => parseInt(u.id) === parseInt(postObject.user_id))
                         const category = categories.find(c => parseInt(c.id) === parseInt(postObject.category_id))
