@@ -12,7 +12,7 @@ import { SubscriptionContext } from "../subscriptions/SubscriptionProvider"
 export const PostDetail = () => {
   
     const { getPostById, deletePost, getPosts, posts} = useContext(PostContext)
-    const { deleteSubscription, addSubscription } = useContext(SubscriptionContext)
+    const { deleteSubscription, addSubscription, subscriptions, getSubscriptions } = useContext(SubscriptionContext)
     const { users, getUsers } = useContext(UserContext)
     const { getCategories, categories } = useContext(CategoryContext)
     const [post, setPost] = useState({})
@@ -41,9 +41,11 @@ export const PostDetail = () => {
         history.push(`/posts/edit/${post?.id}`)    
     }
     
+    const handleUnsubscribe = () => {    
+        addSubscription(subscription)
+    }
+
     const handleSubscribe = () => {    
-        debugger
-            
         addSubscription(subscription)
     }
 
@@ -53,6 +55,7 @@ export const PostDetail = () => {
         getUsers()
         getPosts()
         getCategories()
+        getSubscriptions()
     }, [])
 
 
@@ -67,7 +70,10 @@ export const PostDetail = () => {
     
     const author = users.find(u => parseInt(u.id) === parseInt(post?.user_id))
     const category = categories.find(c => parseInt(c.id) === parseInt(post?.category_id))
-
+    const subed = subscriptions.filter(s => parseInt(s.follower_id) === parseInt(currentUser))
+    const is_subed = subed.find(s => parseInt(s?.author_id) === parseInt(author?.id))
+    
+    
     
 
    
@@ -75,6 +81,8 @@ export const PostDetail = () => {
     if(currentUser === post?.user_id) {
         is_user = 1
     }
+   
+   
     
 
     return (
@@ -100,7 +108,12 @@ export const PostDetail = () => {
                 Delete
             </button> : "" }
 
-            { is_user ? "" : <button className="btn btn-primary"
+            
+            { is_user ? "" : is_subed ? <button className="btn btn-primary"
+                
+                onClick={handleUnsubscribe}>
+                Unsubscribe
+            </button> :  <button className="btn btn-primary"
                 
                 onClick={handleSubscribe}>
                 Subscribe
