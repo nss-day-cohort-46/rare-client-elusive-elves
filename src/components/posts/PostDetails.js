@@ -42,7 +42,7 @@ export const PostDetail = () => {
     }
     
     const handleUnsubscribe = () => {    
-        addSubscription(subscription)
+        
     }
 
     const handleSubscribe = () => {    
