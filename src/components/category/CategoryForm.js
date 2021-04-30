@@ -3,7 +3,7 @@ import { useHistory, useParams } from 'react-router'
 import { CategoryContext } from './CategoryProvider'
 
 export const CategoryForm = () => {
-    const { getCategories, addCategory, getCategoryById, deleteCategory, updateCategory } = useContext(CategoryContext)
+    const { getCategories, addCategory, getCategoryById, updateCategory } = useContext(CategoryContext)
     const { categoryId } = useParams()
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory()
@@ -13,21 +13,22 @@ export const CategoryForm = () => {
 
     //track changes to form, update state variable with setCategory
     const handleInputChange = e => {
-        // pass all key:value pairs from ...category 
-        // const newCategory = { ...category }
-        // newCategory[e.target.id] = e.target.value
         setCategory(e.target.value)
     }
 
     const handleSubmit = (event) => {
         event.preventDefault()
         if (categoryId) {
-            updateCategory({id: categoryId, label: category})
+            updateCategory({ id: categoryId, label: category })
                 .then(() => history.push(`/categories`))
         } else {
-            addCategory({label: category})
+            addCategory({ label: category })
             history.push("/categories")
         }
+    }
+
+    const handleClickCancel = () => {
+        history.push(`/categories/detail/${categoryId}`)
     }
 
     useEffect(() => {
@@ -58,7 +59,12 @@ export const CategoryForm = () => {
                             onChange={handleInputChange}
                             className="form-control"
                             value={category.label}></input>
-                        <button onClick={handleSubmit}>Submit</button>
+                        <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
+                        {categoryId ? <button className="btn btn-primary"
+                            disabled={isLoading}
+                            onClick={handleClickCancel}>
+                            Cancel
+                        </button> : ""}
                     </div>
                 </fieldset>
             </form>
