@@ -4,14 +4,12 @@ import { CategoryContext } from "./CategoryProvider"
 
 export const CategoryDetail = () => {
     const { getCategories, getCategoryById, deleteCategory, updateCategory } = useContext(CategoryContext)
-    const [ category, setCategory ] = useState({})
+    const [category, setCategory] = useState({})
     const [deleteModalOpen, setDeleteModalOpen] = useState(false)
     const { categoryId } = useParams()
     const history = useHistory()
 
     const confirmDelete = e => {
-        const id = categoryId
-        setCategory(id)
         setDeleteModalOpen(true)
     }
 
@@ -25,10 +23,6 @@ export const CategoryDetail = () => {
     useEffect(() => {
         getCategories()
     }, [])
-    
-    // useEffect(() => {
-    //     console.log('category: ', category);
-    // }, [category])
 
     useEffect(() => {
         getCategoryById(categoryId)
@@ -45,7 +39,7 @@ export const CategoryDetail = () => {
                 <button onClick={() => { history.push(`/categories/edit/${category?.id}`) }}>Edit</button>
             </section>
 
-            <dialog open={deleteModalOpen}>Are you sure you want to delete {category.label}?
+            <dialog open={deleteModalOpen}>{`Are you sure you want to delete ${category?.label}?`}
                 <button className="confirmDeleteButton" onClick={handleDelete}>Yes</button>
                 <button className="closeModalButton" onClick={() => setDeleteModalOpen(false)}>X</button>
             </dialog>
