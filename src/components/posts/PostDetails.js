@@ -4,18 +4,30 @@ import "./Post.css"
 import { useParams, useHistory } from "react-router-dom"
 import { UserContext } from "../users/UserProvider"
 import { CategoryContext } from "../category/CategoryProvider"
+import { CommentForm } from "../comments/CommentForm"
+import { CommentList } from "../comments/CommentList"
+import { SubscriptionContext } from "../subscriptions/SubscriptionProvider"
+
 
 export const PostDetail = () => {
   
-
     const { getPostById, deletePost, getPosts, posts} = useContext(PostContext)
+    const { deleteSubscription, addSubscription } = useContext(SubscriptionContext)
     const { users, getUsers } = useContext(UserContext)
-    const { categories } = useContext(CategoryContext)
+    const { getCategories, categories } = useContext(CategoryContext)
     const [post, setPost] = useState({})
 	const {postId} = useParams();
     const history = useHistory()
     const currentUser = parseInt(localStorage.getItem("rare_user_id"))
     const [ isLoading, setIsLoading ] = useState(true);
+    const date = new Date
+
+    const [subscription, setSubscription] = useState({
+        author_id: post.user_id,
+        follower_id: parseInt(localStorage.getItem("rare_user_id")),
+        created_on: date.toLocaleString(),
+        ended_on: ""      
+    });
 
     const handleDelete = () => {
         deletePost(post.id)
@@ -24,16 +36,20 @@ export const PostDetail = () => {
         })
     }
 
-    const handleEdit = () => {
-        
-        
-            history.push(`/posts/edit/${post?.id}`)
-        
+    const handleEdit = () => {        
+            history.push(`/posts/edit/${post?.id}`)    
     }
+
+    const handleSubscribe = () => {        
+        addSubscription(subscription)
+    }
+
+    
 
     useEffect(() => {
         getUsers()
         getPosts()
+        getCategories()
     }, [])
 
 
@@ -52,9 +68,9 @@ export const PostDetail = () => {
     
 
    
-    let deletable = ""
+    let is_user = ""
     if(currentUser === post?.user_id) {
-        deletable = 1
+        is_user = 1
     }
     
 
@@ -69,18 +85,26 @@ export const PostDetail = () => {
             <div className="postPublicationDate">Publication Date: {post?.publication_date }</div>
             <div className="postContent">Content: {post?.content}</div>
             
-            { deletable ? <button className="btn btn-primary"
-                
-                onClick={handleDelete}>
-                Delete
-            </button> : "" }
-            { deletable ? <button className="btn btn-primary"
+            
+            { is_user ? <button className="btn btn-primary"
                 
                 onClick={handleEdit}>
                 Edit
             </button> : "" }
+            { is_user ? <button className="btn btn-primary"
+                
+                onClick={handleDelete}>
+                Delete
+            </button> : "" }
+
+            { is_user ? "" : <button className="btn btn-primary"
+                
+                onClick={handleSubscribe}>
+                Subscribe
+            </button> }
             
-            
+            <CommentForm />
+            <CommentList />
             
         </section>
         </>
