@@ -35,7 +35,7 @@ export const CategoryForm = () => {
             if (categoryId) {
                 getCategoryById(categoryId)
                     .then(category => {
-                        setCategory(category)
+                        setCategory(category.label)
                         setIsLoading(false)
                     })
             } else {
@@ -57,7 +57,7 @@ export const CategoryForm = () => {
                             id="categoryLabel"
                             onChange={handleInputChange}
                             className="form-control"
-                            value={category.label}></input>
+                            value={category}></input>
                         <button onClick={handleSubmit}>Submit</button>
                     </div>
                 </fieldset>
