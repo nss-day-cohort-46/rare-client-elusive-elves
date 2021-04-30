@@ -35,13 +35,13 @@ export const CategoryDetail = () => {
         <>
             <section className="category">
                 <div className="categoryLabel">Category: {category?.label}</div>
-                <button className="btn btn-primary" onClick={handleDelete}>Delete Category</button>
+                <button className="btn btn-primary" onClick={confirmDelete}>Delete Category</button>
                 <button className="btn btn-primary" onClick={() => { history.push(`/categories/edit/${category?.id}`) }}>Edit</button>
             </section>
 
             <dialog open={deleteModalOpen}>{`Are you sure you want to delete ${category?.label}?`}
-                <button className="confirmDeleteButton" onClick={handleDelete}>Yes</button>
-                <button className="closeModalButton" onClick={() => setDeleteModalOpen(false)}>X</button>
+                <button className="confirmDeleteButton" onClick={handleDelete}> Yes </button>
+                <button className="closeModalButton" onClick={() => setDeleteModalOpen(false)}> X </button>
             </dialog>
         </>
     )
