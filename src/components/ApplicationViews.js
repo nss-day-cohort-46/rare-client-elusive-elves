@@ -10,6 +10,8 @@ import { CategoryList } from "./category/CategoryList"
 import { CategoryForm } from "./category/CategoryForm"
 import { CategoryDetail } from "./category/CategoryDetails"
 import { UserProvider } from "./users/UserProvider"
+import { CommentProvider } from "./comments/CommentProvider"
+
 
 
 
@@ -21,25 +23,25 @@ export const ApplicationViews = () => {
         }}>
         <PostProvider>
             <UserProvider>
-          
-                <CategoryProvider>
-                    <Route exact path="/">
-                        <PostList />
-                    </Route>
-                    <Route exact path="/mypostlist">
-                    <MyPostsList />
-                    </Route>
-                    <Route exact path="/posts/detail/:postId(\d+)">
-                        <PostDetail />
-                    </Route>
-                    <Route exact path="/posts/edit/:postId(\d+)">
-                        <PostForm />
-                    </Route>
-                    <Route exact path="/posts/create">
-                        <PostForm />
-                    </Route>
-                </CategoryProvider>
-
+                <CommentProvider>
+                    <CategoryProvider>
+                        <Route exact path="/">
+                            <PostList />
+                        </Route>
+                        <Route exact path="/mypostlist">
+                        <MyPostsList />
+                        </Route>
+                        <Route exact path="/posts/detail/:postId(\d+)">
+                            <PostDetail />
+                        </Route>
+                        <Route exact path="/posts/edit/:postId(\d+)">
+                            <PostForm />
+                        </Route>
+                        <Route exact path="/posts/create">
+                            <PostForm />
+                        </Route>
+                    </CategoryProvider>
+                </CommentProvider>
             </UserProvider>
         </PostProvider>
         <CategoryProvider>  

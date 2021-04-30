@@ -4,13 +4,15 @@ import "./Post.css"
 import { useParams, useHistory } from "react-router-dom"
 import { UserContext } from "../users/UserProvider"
 import { CategoryContext } from "../category/CategoryProvider"
+import { CommentForm } from "../comments/CommentForm"
+import { CommentList } from "../comments/CommentList"
 
 export const PostDetail = () => {
   
 
     const { getPostById, deletePost, getPosts, posts} = useContext(PostContext)
     const { users, getUsers } = useContext(UserContext)
-    const { categories } = useContext(CategoryContext)
+    const { getCategories, categories } = useContext(CategoryContext)
     const [post, setPost] = useState({})
 	const {postId} = useParams();
     const history = useHistory()
@@ -24,16 +26,16 @@ export const PostDetail = () => {
         })
     }
 
-    const handleEdit = () => {
-        
-        
-            history.push(`/posts/edit/${post?.id}`)
-        
+    const handleEdit = () => {        
+            history.push(`/posts/edit/${post?.id}`)    
     }
+
+    
 
     useEffect(() => {
         getUsers()
         getPosts()
+        getCategories()
     }, [])
 
 
@@ -69,18 +71,20 @@ export const PostDetail = () => {
             <div className="postPublicationDate">Publication Date: {post?.publication_date }</div>
             <div className="postContent">Content: {post?.content}</div>
             
-            { deletable ? <button className="btn btn-primary"
-                
-                onClick={handleDelete}>
-                Delete
-            </button> : "" }
+            
             { deletable ? <button className="btn btn-primary"
                 
                 onClick={handleEdit}>
                 Edit
             </button> : "" }
+            { deletable ? <button className="btn btn-primary"
+                
+                onClick={handleDelete}>
+                Delete
+            </button> : "" }
             
-            
+            <CommentForm />
+            <CommentList />
             
         </section>
         </>
