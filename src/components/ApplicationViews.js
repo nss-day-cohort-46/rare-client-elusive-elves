@@ -11,7 +11,7 @@ import { CategoryForm } from "./category/CategoryForm"
 import { CategoryDetail } from "./category/CategoryDetails"
 import { UserProvider } from "./users/UserProvider"
 import { CommentProvider } from "./comments/CommentProvider"
-
+import { SubscriptionProvider } from "./subscriptions/SubscriptionProvider"
 
 
 
@@ -22,27 +22,29 @@ export const ApplicationViews = () => {
             lineHeight: "1.75rem"
         }}>
         <PostProvider>
-            <UserProvider>
-                <CommentProvider>
-                    <CategoryProvider>
-                        <Route exact path="/">
-                            <PostList />
-                        </Route>
-                        <Route exact path="/mypostlist">
-                        <MyPostsList />
-                        </Route>
-                        <Route exact path="/posts/detail/:postId(\d+)">
-                            <PostDetail />
-                        </Route>
-                        <Route exact path="/posts/edit/:postId(\d+)">
-                            <PostForm />
-                        </Route>
-                        <Route exact path="/posts/create">
-                            <PostForm />
-                        </Route>
-                    </CategoryProvider>
-                </CommentProvider>
-            </UserProvider>
+            <SubscriptionProvider>
+                <UserProvider>
+                    <CommentProvider>
+                        <CategoryProvider>
+                            <Route exact path="/">
+                                <PostList />
+                            </Route>
+                            <Route exact path="/mypostlist">
+                            <MyPostsList />
+                            </Route>
+                            <Route exact path="/posts/detail/:postId(\d+)">
+                                <PostDetail />
+                            </Route>
+                            <Route exact path="/posts/edit/:postId(\d+)">
+                                <PostForm />
+                            </Route>
+                            <Route exact path="/posts/create">
+                                <PostForm />
+                            </Route>
+                        </CategoryProvider>
+                    </CommentProvider>
+                </UserProvider>
+            </SubscriptionProvider>
         </PostProvider>
         <CategoryProvider>  
             <Route exact path="/categories">

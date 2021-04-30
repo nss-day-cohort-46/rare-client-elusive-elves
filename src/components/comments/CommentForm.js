@@ -8,7 +8,7 @@ import { CommentContext } from "../comments/CommentProvider";
 export const CommentForm = () => {
     
     const { addComment, getCommentById, updateComment, getComments } = useContext(CommentContext)
-    const { commentId } = useParams()
+    const { postId } = useParams()
     const [ isLoading, setIsLoading ] = useState(true);
     const history = useHistory();
     const date = new Date
@@ -17,7 +17,7 @@ export const CommentForm = () => {
     //Define the intial state of the Comment with useState()
     const [comment, setComment] = useState({
         author_id: parseInt(localStorage.getItem("rare_user_id")),
-        post_id: "",
+        post_id: postId,
         created_on: date.toLocaleString(),
         content: ""      
     });
@@ -46,11 +46,11 @@ export const CommentForm = () => {
         event.preventDefault() 
         
        
-       if (commentId) {
-        updateComment(comment)
-        .then(history.goBack)
+    //    if (commentId) {
+    //     updateComment(comment)
+    //     .then(history.goBack)
         
-        } else {
+    //     } else {
        
         //create a new Comment then move to comment details
         addComment(comment)
@@ -59,32 +59,33 @@ export const CommentForm = () => {
         //     history.push(`/comments/detail/${c.id}`)
         // })   
       
-    }}
+    // }
+}
     //handle save function
-    const handleClickCancel = () => {
-        history.push(`/comments/detail/${commentId}`)
-    }
+    // const handleClickCancel = () => {
+    //     history.push(`/comments/detail/${commentId}`)
+    // }
 
-    useEffect(() => {
-        //get all Comments
-        getComments().then(() => {
+    // useEffect(() => {
+    //     //get all Comments
+    //     getComments().then(() => {
 
-        // if commentID exists
-        if (commentId) {
-            //get that comment
-            getCommentById(commentId)
-            //then setComment to that found Comment
-            .then(Comment => {
-                setComment(Comment)
+    //     // if commentID exists
+    //     if (commentId) {
+    //         //get that comment
+    //         getCommentById(commentId)
+    //         //then setComment to that found Comment
+    //         .then(Comment => {
+    //             setComment(Comment)
                 
-                setIsLoading(false)
-            })
-        } else {
-            // else there is no data
-            setIsLoading(false)
-        }
-        })
-    }, [])
+    //             setIsLoading(false)
+    //         })
+    //     } else {
+    //         // else there is no data
+    //         setIsLoading(false)
+    //     }
+    //     })
+    // }, [])
 
 
     //Return this HTML
@@ -110,11 +111,11 @@ export const CommentForm = () => {
                 Save
             </button>
             
-            { commentId ? <button className="btn btn-primary"
+            {/* { commentId ? <button className="btn btn-primary"
                 
                 onClick={handleClickCancel}>
                 Cancel
-            </button> : "" }
+            </button> : "" } */}
             
             
         </form>

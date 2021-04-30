@@ -6,11 +6,13 @@ import { UserContext } from "../users/UserProvider"
 import { CategoryContext } from "../category/CategoryProvider"
 import { CommentForm } from "../comments/CommentForm"
 import { CommentList } from "../comments/CommentList"
+import { SubscriptionContext } from "../subscriptions/SubscriptionProvider"
+
 
 export const PostDetail = () => {
   
-
     const { getPostById, deletePost, getPosts, posts} = useContext(PostContext)
+    const { deleteSubscription, addSubscription } = useContext(SubscriptionContext)
     const { users, getUsers } = useContext(UserContext)
     const { getCategories, categories } = useContext(CategoryContext)
     const [post, setPost] = useState({})
@@ -18,6 +20,14 @@ export const PostDetail = () => {
     const history = useHistory()
     const currentUser = parseInt(localStorage.getItem("rare_user_id"))
     const [ isLoading, setIsLoading ] = useState(true);
+    const date = new Date
+
+    const [subscription, setSubscription] = useState({
+        author_id: post.user_id,
+        follower_id: parseInt(localStorage.getItem("rare_user_id")),
+        created_on: date.toLocaleString(),
+        ended_on: ""      
+    });
 
     const handleDelete = () => {
         deletePost(post.id)
@@ -28,6 +38,10 @@ export const PostDetail = () => {
 
     const handleEdit = () => {        
             history.push(`/posts/edit/${post?.id}`)    
+    }
+
+    const handleSubscribe = () => {        
+        addSubscription(subscription)
     }
 
     
@@ -54,9 +68,9 @@ export const PostDetail = () => {
     
 
    
-    let deletable = ""
+    let is_user = ""
     if(currentUser === post?.user_id) {
-        deletable = 1
+        is_user = 1
     }
     
 
@@ -72,16 +86,22 @@ export const PostDetail = () => {
             <div className="postContent">Content: {post?.content}</div>
             
             
-            { deletable ? <button className="btn btn-primary"
+            { is_user ? <button className="btn btn-primary"
                 
                 onClick={handleEdit}>
                 Edit
             </button> : "" }
-            { deletable ? <button className="btn btn-primary"
+            { is_user ? <button className="btn btn-primary"
                 
                 onClick={handleDelete}>
                 Delete
             </button> : "" }
+
+            { is_user ? "" : <button className="btn btn-primary"
+                
+                onClick={handleSubscribe}>
+                Subscribe
+            </button> }
             
             <CommentForm />
             <CommentList />

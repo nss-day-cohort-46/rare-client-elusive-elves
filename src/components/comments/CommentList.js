@@ -3,7 +3,7 @@ import { CommentContext } from "./CommentProvider"
 
 import { CommentCard } from "./CommentCard"
 import "./Comment.css"
-import { useHistory } from "react-router-dom"
+import { useHistory, useParams } from "react-router-dom"
 import { UserContext } from "../users/UserProvider"
 import { CategoryContext } from "../category/CategoryProvider"
 
@@ -13,6 +13,7 @@ export const CommentList = () => {
     const { getComments, comments } = useContext(CommentContext)
     const { getUsers, users } = useContext(UserContext)
     const { getCategories, categories } = useContext(CategoryContext)
+    const { postId } = useParams()
 
     // useState to return filtered comments
     
@@ -26,18 +27,22 @@ export const CommentList = () => {
     }, [])
   
     
+    const commentsFiltered = comments.filter( c => c.post_id === parseInt(postId) )
+    
+    console.log(commentsFiltered)
 
+    
 
-    const commentsSorted = comments.sort(
+    const commentsSorted = commentsFiltered.sort(
       (currentComment, nextComment) =>
-          Date.parse(nextComment.publication_date) - Date.parse(currentComment.publication_date)
+          Date.parse(nextComment.created_on) - Date.parse(currentComment.created_on)
     )
   
       return (
         <>
             <div className="comments">
                 {
-                    comments.map(commentObject => {
+                    commentsSorted.map(commentObject => {
                       
                         const author = users.find(u => parseInt(u.id) === parseInt(commentObject.author_id))
 
