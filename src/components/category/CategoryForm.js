@@ -58,7 +58,7 @@ export const CategoryForm = () => {
                             id="categoryLabel"
                             onChange={handleInputChange}
                             className="form-control"
-                            value={category.label}></input>
+                            value={category}></input>
                         <button className="btn btn-primary" onClick={handleSubmit}>Submit</button>
                         {categoryId ? <button className="btn btn-primary"
                             disabled={isLoading}

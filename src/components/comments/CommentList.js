@@ -29,7 +29,6 @@ export const CommentList = () => {
     
     const commentsFiltered = comments.filter( c => c.post_id === parseInt(postId) )
     
-    console.log(commentsFiltered)
 
     
 

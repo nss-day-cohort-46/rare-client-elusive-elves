@@ -11,8 +11,10 @@ import { SubscriptionContext } from "../subscriptions/SubscriptionProvider"
 
 export const PostDetail = () => {
 
-    const { getPostById, deletePost, getPosts, posts, updatePost } = useContext(PostContext)
-    const { deleteSubscription, addSubscription } = useContext(SubscriptionContext)
+  
+    const { getPostById, deletePost, getPosts, posts, updatePost} = useContext(PostContext)
+    const { deleteSubscription, addSubscription, subscriptions, getSubscriptions } = useContext(SubscriptionContext)
+
     const { users, getUsers } = useContext(UserContext)
     const { getCategories, categories } = useContext(CategoryContext)
     const [post, setPost] = useState({})
@@ -47,10 +49,12 @@ export const PostDetail = () => {
         updatePost(post)
         history.push(`/posts/edit/${post?.id}`)
     }
+    
+    const handleUnsubscribe = () => {    
+        
+    }
 
-    const handleSubscribe = () => {
-        debugger
-
+    const handleSubscribe = () => {    
         addSubscription(subscription)
     }
 
@@ -60,6 +64,7 @@ export const PostDetail = () => {
         getUsers()
         getPosts()
         getCategories()
+        getSubscriptions()
     }, [])
 
 
@@ -74,7 +79,11 @@ export const PostDetail = () => {
 
     const author = users.find(u => parseInt(u.id) === parseInt(post?.user_id))
     const category = categories.find(c => parseInt(c.id) === parseInt(post?.category_id))
-
+    const subed = subscriptions.filter(s => parseInt(s.follower_id) === parseInt(currentUser))
+    const is_subed = subed.find(s => parseInt(s?.author_id) === parseInt(author?.id))
+    
+    
+    
 
 
 
@@ -83,10 +92,10 @@ export const PostDetail = () => {
         is_user = 1
     }
 
-
     return (
 
         <>
+
             <section className="post">
                 <h3 className="postTitle">{post?.title}</h3>
                 <div className="postId">Post ID: {post?.id}</div>
@@ -96,22 +105,27 @@ export const PostDetail = () => {
                 <div className="postContent">Content: {post?.content}</div>
 
 
-                {is_user ? <button className="btn btn-primary"
-
+                { is_user ? <button className="btn btn-primary"
+                
                     onClick={handleEdit}>
                     Edit
-            </button> : ""}
-                {is_user ? <button className="btn btn-primary"
-
-                    onClick={confirmDelete}>
+                </button> : "" }
+                { is_user ? <button className="btn btn-primary"
+                    
+                    onClick={handleDelete}>
                     Delete
-            </button> : ""}
+                </button> : "" }
 
-                {is_user ? "" : <button className="btn btn-primary"
-
+                
+                { is_user ? "" : is_subed ? <button className="btn btn-primary"
+                    
+                    onClick={handleUnsubscribe}>
+                    Unsubscribe
+                </button> :  <button className="btn btn-primary"
+                    
                     onClick={handleSubscribe}>
                     Subscribe
-            </button>}
+                </button> }
 
                 <CommentForm />
                 <CommentList />
@@ -122,6 +136,7 @@ export const PostDetail = () => {
                 <button className="confirmDeleteButton" onClick={handleDelete}> Yes </button>
                 <button className="closeModalButton" onClick={() => setDeleteModalOpen(false)}> X </button>
             </dialog>
+
         </>
     )
 }
