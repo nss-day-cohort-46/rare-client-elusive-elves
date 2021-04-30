@@ -11,7 +11,7 @@ import { SubscriptionContext } from "../subscriptions/SubscriptionProvider"
 
 export const PostDetail = () => {
   
-    const { getPostById, deletePost, getPosts, posts} = useContext(PostContext)
+    const { getPostById, deletePost, getPosts, posts, updatePost} = useContext(PostContext)
     const { deleteSubscription, addSubscription } = useContext(SubscriptionContext)
     const { users, getUsers } = useContext(UserContext)
     const { getCategories, categories } = useContext(CategoryContext)
@@ -37,7 +37,8 @@ export const PostDetail = () => {
         })
     }
     
-    const handleEdit = () => {        
+    const handleEdit = () => {  
+        updatePost(post)
         history.push(`/posts/edit/${post?.id}`)    
     }
     
