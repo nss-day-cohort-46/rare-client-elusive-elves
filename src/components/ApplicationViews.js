@@ -12,6 +12,10 @@ import { CategoryDetail } from "./category/CategoryDetails"
 import { UserProvider } from "./users/UserProvider"
 import { CommentProvider } from "./comments/CommentProvider"
 import { SubscriptionProvider } from "./subscriptions/SubscriptionProvider"
+import { TagsProvider } from "./tags/TagsProvider"
+import { TagList } from "./tags/TagList"
+import { TagForm } from "./tags/TagForm"
+import { TagDetail } from "./tags/TagDetail"
 
 
 
@@ -60,6 +64,20 @@ export const ApplicationViews = () => {
                 <CategoryForm />
             </Route>
         </CategoryProvider>
+        <TagsProvider>
+            <Route exact path="/tags">
+                <TagList />
+            </Route>
+            <Route exact path="/tags/edit/:tagId(\d+)">
+                <TagForm/>
+            </Route>
+            <Route exact path="/tags/create">
+                <TagForm/>
+            </Route>
+            <Route exact path="/tags/detail/:tagId(\d+)">
+                <TagDetail />
+            </Route>
+        </TagsProvider>
         </main>
     </>
 }
