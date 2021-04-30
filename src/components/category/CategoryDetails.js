@@ -35,8 +35,8 @@ export const CategoryDetail = () => {
         <>
             <section className="category">
                 <div className="categoryLabel">Category: {category?.label}</div>
-                <button onClick={confirmDelete}>Delete Category</button>
-                <button onClick={() => { history.push(`/categories/edit/${category?.id}`) }}>Edit</button>
+                <button className="btn btn-primary" onClick={handleDelete}>Delete Category</button>
+                <button className="btn btn-primary" onClick={() => { history.push(`/categories/edit/${category?.id}`) }}>Edit</button>
             </section>
 
             <dialog open={deleteModalOpen}>{`Are you sure you want to delete ${category?.label}?`}

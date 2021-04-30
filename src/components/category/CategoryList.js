@@ -18,7 +18,7 @@ export const CategoryList = () => {
       <>
         <section className="CategoryList">
           <h1> Category List </h1>
-          <button onClick={() => history.push("/categories/create")}> Create Category </button>
+          <button className="btn btn-primary" onClick={() => history.push("/categories/create")}> Create Category </button>
           <div className="Categories">
             {
             categories.map(category => {
