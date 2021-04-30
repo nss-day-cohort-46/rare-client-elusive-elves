@@ -21,13 +21,14 @@ export const PostDetail = () => {
     const currentUser = parseInt(localStorage.getItem("rare_user_id"))
     const [ isLoading, setIsLoading ] = useState(true);
     const date = new Date
+    const author_id = post?.user_id
 
-    const [subscription, setSubscription] = useState({
-        author_id: post.user_id,
+    const subscription = {
+        author_id,    
         follower_id: parseInt(localStorage.getItem("rare_user_id")),
         created_on: date.toLocaleString(),
         ended_on: ""      
-    });
+    }
 
     const handleDelete = () => {
         deletePost(post.id)
@@ -35,12 +36,14 @@ export const PostDetail = () => {
             history.push("/posts")
         })
     }
-
+    
     const handleEdit = () => {        
-            history.push(`/posts/edit/${post?.id}`)    
+        history.push(`/posts/edit/${post?.id}`)    
     }
-
-    const handleSubscribe = () => {        
+    
+    const handleSubscribe = () => {    
+        debugger
+            
         addSubscription(subscription)
     }
 
