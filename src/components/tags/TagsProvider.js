@@ -4,8 +4,9 @@ import React, { useState, createContext } from "react"
 export const TagContext = createContext()
 
 // This component establishes what data can be used.
-export const TagProvider = (props) => {
+export const TagsProvider = (props) => {
     const [tags, setTags] = useState([])
+    const [ searchTerms, setSearchTerms ] = useState("")
 
     const getTags = () => {
         return fetch("http://localhost:8088/tags")
@@ -49,7 +50,7 @@ export const TagProvider = (props) => {
           .then(getTags)
       }
 
-    const [ searchTerms, setSearchTerms ] = useState("")
+    
 
     /*
         You return a context provider which has the
